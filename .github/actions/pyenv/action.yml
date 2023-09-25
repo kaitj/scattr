@@ -1,0 +1,21 @@
+name: Setup python environment
+description: Install python environment from cache
+inputs:
+  python-version:
+    required: true
+    description: Python version(s) to install
+  reference:
+    required: true
+    description: >
+      Reference ID to use for defining poetry cache (e.g. PR id or commit SHA)
+
+runs:
+  using: composite
+  steps:
+    # Install & configure poetry
+    - name: Cache Poetry installation
+      id: cached-poetry
+      uses: actions/cache@v3
+      with:
+        path: ~/.local
+        key: ${{ runner.os }}-poetry-${{ inputs.reference }}
